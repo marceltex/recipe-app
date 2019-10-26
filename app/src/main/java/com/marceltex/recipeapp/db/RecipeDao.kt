@@ -3,6 +3,7 @@ package com.marceltex.recipeapp.db
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import com.marceltex.recipeapp.data.Image
 import com.marceltex.recipeapp.data.Recipe
 import com.marceltex.recipeapp.data.RecipeWithImages
@@ -10,12 +11,13 @@ import com.marceltex.recipeapp.data.RecipeWithImages
 @Dao
 interface RecipeDao {
 
+    @Transaction
     @Query("SELECT * from recipes")
-    fun getAll(): List<RecipeWithImages>
+    suspend fun getAll(): List<RecipeWithImages>
 
-    @Insert()
-    fun addRecipe(recipe: Recipe): Long
+    @Insert
+    suspend fun insertRecipe(recipe: Recipe): Long
 
-    @Insert()
-    fun addImage(image: Image): Long
+    @Insert
+    suspend fun insertImage(image: Image): Long
 }

@@ -8,5 +8,5 @@ data class RecipeWithImages(
     val recipe: Recipe,
 
     @Relation(parentColumn = "id", entityColumn = "recipeId")
-    val images: List<Image>
+    val images: List<Image>?
 )
