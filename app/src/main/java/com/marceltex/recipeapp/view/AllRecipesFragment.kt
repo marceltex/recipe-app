@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.viewmodel.AllRecipesViewModel
 
-class AllRecipesFragment : Fragment() {
+class AllRecipesFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = AllRecipesFragment()
