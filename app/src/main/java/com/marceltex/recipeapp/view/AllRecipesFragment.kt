@@ -1,20 +1,16 @@
 package com.marceltex.recipeapp.view
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.lifecycle.ViewModelProviders
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.viewmodel.AllRecipesViewModel
 
 class AllRecipesFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance() = AllRecipesFragment()
-    }
+    override val title by lazy { getString(R.string.all_recipes_title) }
 
     private lateinit var viewModel: AllRecipesViewModel
 
@@ -30,5 +26,4 @@ class AllRecipesFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this).get(AllRecipesViewModel::class.java)
         // TODO: Use the ViewModel
     }
-
 }
