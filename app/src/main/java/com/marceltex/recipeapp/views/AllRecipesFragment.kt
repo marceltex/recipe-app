@@ -1,18 +1,18 @@
-package com.marceltex.recipeapp.view
+package com.marceltex.recipeapp.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import com.airbnb.mvrx.fragmentViewModel
 import com.marceltex.recipeapp.R
-import com.marceltex.recipeapp.viewmodel.AllRecipesViewModel
+import com.marceltex.recipeapp.viewmodels.AllRecipesViewModel
 
 class AllRecipesFragment : BaseFragment() {
 
     override val title by lazy { getString(R.string.all_recipes_title) }
 
-    private lateinit var viewModel: AllRecipesViewModel
+    private val viewModel: AllRecipesViewModel by fragmentViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,7 +23,9 @@ class AllRecipesFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AllRecipesViewModel::class.java)
-        // TODO: Use the ViewModel
+    }
+
+    override fun invalidate() {
+
     }
 }

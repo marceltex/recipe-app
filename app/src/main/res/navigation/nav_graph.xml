@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/allRecipesFragment"
-        android:name="com.marceltex.recipeapp.view.AllRecipesFragment"
+        android:name="com.marceltex.recipeapp.views.AllRecipesFragment"
         android:label="all_recipes_fragment"
         tools:layout="@layout/all_recipes_fragment" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/addRecipeFragment"
-        android:name="com.marceltex.recipeapp.view.AddRecipeFragment"
+        android:name="com.marceltex.recipeapp.views.AddRecipeFragment"
         android:label="add_recipe_fragment"
         tools:layout="@layout/add_recipe_fragment" />
 

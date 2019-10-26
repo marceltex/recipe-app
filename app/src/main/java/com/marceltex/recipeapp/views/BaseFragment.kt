@@ -1,9 +1,9 @@
-package com.marceltex.recipeapp.view
+package com.marceltex.recipeapp.views
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import com.airbnb.mvrx.BaseMvRxFragment
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : BaseMvRxFragment() {
 
     open val title: String = ""
 
