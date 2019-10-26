@@ -1,4 +1,4 @@
-package com.marceltex.recipeapp.view
+package com.marceltex.recipeapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 
