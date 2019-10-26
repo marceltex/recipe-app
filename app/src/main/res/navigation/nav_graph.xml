@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/allRecipesFragment">
+
+    <fragment
+        android:id="@+id/allRecipesFragment"
+        android:name="com.marceltex.recipeapp.view.AllRecipesFragment"
+        android:label="all_recipes_fragment"
+        tools:layout="@layout/all_recipes_fragment" >
+        <action
+            android:id="@+id/action_allRecipesFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addRecipeFragment"
+        android:name="com.marceltex.recipeapp.view.AddRecipeFragment"
+        android:label="add_recipe_fragment"
+        tools:layout="@layout/add_recipe_fragment" />
+
+</navigation>
