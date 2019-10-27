@@ -7,6 +7,6 @@ data class RecipeWithImages(
     @Embedded
     val recipe: Recipe,
 
-    @Relation(parentColumn = "id", entityColumn = "recipeId")
+    @Relation(parentColumn = "id", entityColumn = "recipe_id")
     val images: List<Image>?
 )

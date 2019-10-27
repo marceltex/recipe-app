@@ -1,18 +1,25 @@
 package com.marceltex.recipeapp.di
 
-import com.marceltex.recipeapp.views.AddRecipeFragment
-import com.marceltex.recipeapp.views.AllRecipesFragment
-import com.marceltex.recipeapp.views.MainActivity
+import android.app.Application
+import com.marceltex.recipeapp.App
+import dagger.BindsInstance
 import dagger.Component
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
+@Component(modules = [ActivityModule::class, DatabaseModule::class, FragmentModule::class, AndroidSupportInjectionModule::class])
+
+
 @Singleton
-@Component(modules = [AppModule::class])
 interface AppComponent {
 
-    fun inject(mainActivity: MainActivity)
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(application: Application): Builder
 
-    fun inject(allRecipesFragment: AllRecipesFragment)
+        fun build(): AppComponent
+    }
 
-    fun inject(addRecipeFragment: AddRecipeFragment)
+    fun inject(app: App)
 }

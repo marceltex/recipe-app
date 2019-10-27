@@ -1,23 +1,27 @@
 package com.marceltex.recipeapp
 
 import android.app.Application
-import android.content.Context
-import com.marceltex.recipeapp.di.AppComponent
 import com.marceltex.recipeapp.di.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
-class App : Application() {
+class App : Application(), HasAndroidInjector {
 
-    lateinit var component: AppComponent private set
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+
+    override fun androidInjector(): AndroidInjector<Any> {
+        return dispatchingAndroidInjector
+    }
 
     override fun onCreate() {
         super.onCreate()
 
-        component = DaggerAppComponent.builder().build()
-    }
-
-    companion object {
-        fun get(context: Context) = context.applicationContext as App
-
-        fun getComponent(context: Context) = get(context).component
+        DaggerAppComponent.builder()
+            .application(this)
+            .build()
+            .inject(this)
     }
 }
