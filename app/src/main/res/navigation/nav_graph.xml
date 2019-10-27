@@ -3,16 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/allRecipesFragment">
+    app:startDestination="@id/recipesFragment">
 
     <fragment
-        android:id="@+id/allRecipesFragment"
+        android:id="@+id/recipesFragment"
         android:name="com.marceltex.recipeapp.ui.recipes.RecipesFragment"
-        android:label="all_recipes_fragment"
+        android:label="recipes_fragment"
         tools:layout="@layout/recipes_fragment" >
         <action
-            android:id="@+id/action_allRecipesFragment_to_addRecipeFragment"
-            app:destination="@id/addRecipeFragment" />
+            android:id="@+id/action_recipesFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment"
+            app:enterAnim="@anim/anim_enter"
+            app:exitAnim="@anim/anim_exit"
+            app:popEnterAnim="@anim/anim_pop_enter"
+            app:popExitAnim="@anim/anim_pop_exit" />
     </fragment>
 
     <fragment
