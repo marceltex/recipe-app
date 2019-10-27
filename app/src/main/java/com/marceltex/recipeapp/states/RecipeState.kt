@@ -6,5 +6,5 @@ import com.airbnb.mvrx.Uninitialized
 import com.marceltex.recipeapp.data.Recipe
 
 data class RecipeState(
-    val recipes: Async<List<Recipe>?> = Uninitialized
+    val recipes: Async<List<Recipe>> = Uninitialized
 ) : MvRxState
