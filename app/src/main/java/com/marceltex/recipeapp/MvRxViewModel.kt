@@ -1,4 +1,4 @@
-package com.marceltex.recipeapp.viewmodels
+package com.marceltex.recipeapp
 
 import com.airbnb.mvrx.BaseMvRxViewModel
 import com.airbnb.mvrx.BuildConfig

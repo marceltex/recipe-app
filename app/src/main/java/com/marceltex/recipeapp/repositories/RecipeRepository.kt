@@ -1,6 +1,6 @@
 package com.marceltex.recipeapp.repositories
 
-import com.marceltex.recipeapp.data.RecipeWithImages
+import com.marceltex.recipeapp.model.RecipeWithImages
 import io.reactivex.Completable
 import io.reactivex.Maybe
 

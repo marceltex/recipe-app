@@ -1,4 +1,4 @@
-package com.marceltex.recipeapp.views
+package com.marceltex.recipeapp.ui
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity

@@ -4,9 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.marceltex.recipeapp.data.Image
-import com.marceltex.recipeapp.data.Recipe
-import com.marceltex.recipeapp.data.RecipeWithImages
+import com.marceltex.recipeapp.model.Image
+import com.marceltex.recipeapp.model.Recipe
+import com.marceltex.recipeapp.model.RecipeWithImages
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single

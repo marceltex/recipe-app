@@ -1,4 +1,4 @@
-package com.marceltex.recipeapp.data
+package com.marceltex.recipeapp.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
