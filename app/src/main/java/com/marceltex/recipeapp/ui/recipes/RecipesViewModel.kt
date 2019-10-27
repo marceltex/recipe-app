@@ -2,12 +2,13 @@ package com.marceltex.recipeapp.ui.recipes
 
 import com.airbnb.mvrx.*
 import com.marceltex.recipeapp.MvRxViewModel
-import com.marceltex.recipeapp.model.Recipe
+import com.marceltex.recipeapp.model.RecipeWithImages
 import com.marceltex.recipeapp.repository.RecipeRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import io.reactivex.schedulers.Schedulers
 
-data class RecipeState(val recipes: Async<List<Recipe>> = Uninitialized) : MvRxState
+data class RecipeState(val recipes: Async<List<RecipeWithImages>> = Uninitialized) : MvRxState
 
 class RecipesViewModel @AssistedInject constructor(
     @Assisted state: RecipeState,
@@ -17,6 +18,12 @@ class RecipesViewModel @AssistedInject constructor(
     // Async call to fetch all recipes from DB
     fun fetchRecipes() {
 
+    }
+
+    init {
+        repository.getAllRecipes()
+            .subscribeOn(Schedulers.io())
+            .execute { copy(recipes = it) }
     }
 
     @AssistedInject.Factory
