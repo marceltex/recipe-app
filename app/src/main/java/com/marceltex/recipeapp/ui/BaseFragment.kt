@@ -7,7 +7,7 @@ import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseFragment : BaseMvRxFragment() {
 
-    open val title: String = ""
+    open val title = ""
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
