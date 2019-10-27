@@ -1,4 +1,4 @@
-package com.marceltex.recipeapp.repositories
+package com.marceltex.recipeapp.repository
 
 import com.marceltex.recipeapp.db.RecipeDao
 import com.marceltex.recipeapp.model.RecipeWithImages

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.marceltex.recipeapp.db.RecipeDao
 import com.marceltex.recipeapp.db.RecipeDatabase
-import com.marceltex.recipeapp.repositories.RecipeRepository
-import com.marceltex.recipeapp.repositories.RecipeRepositoryImpl
+import com.marceltex.recipeapp.repository.RecipeRepository
+import com.marceltex.recipeapp.repository.RecipeRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

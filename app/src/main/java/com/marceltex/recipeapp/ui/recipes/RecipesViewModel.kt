@@ -3,7 +3,7 @@ package com.marceltex.recipeapp.ui.recipes
 import com.airbnb.mvrx.*
 import com.marceltex.recipeapp.MvRxViewModel
 import com.marceltex.recipeapp.model.Recipe
-import com.marceltex.recipeapp.repositories.RecipeRepository
+import com.marceltex.recipeapp.repository.RecipeRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 
