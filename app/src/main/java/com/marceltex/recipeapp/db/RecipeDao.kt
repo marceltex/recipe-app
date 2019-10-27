@@ -7,17 +7,20 @@ import androidx.room.Transaction
 import com.marceltex.recipeapp.data.Image
 import com.marceltex.recipeapp.data.Recipe
 import com.marceltex.recipeapp.data.RecipeWithImages
+import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.Single
 
 @Dao
 interface RecipeDao {
 
     @Transaction
     @Query("SELECT * from recipes")
-    suspend fun getAll(): List<RecipeWithImages>
+    fun getAll(): Maybe<List<RecipeWithImages>>
 
     @Insert
-    suspend fun insertRecipe(recipe: Recipe): Long
+    fun insertRecipe(recipe: Recipe): Single<Long>
 
     @Insert
-    suspend fun insertImage(image: Image): Long
+    fun insertImages(images: List<Image>): Completable
 }
