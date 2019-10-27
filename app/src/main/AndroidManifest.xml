@@ -5,7 +5,7 @@
     tools:ignore="GoogleAppIndexingWarning">
 
     <application
-        android:name=".App"
+        android:name=".MvRxApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
