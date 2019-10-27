@@ -18,11 +18,6 @@ class RecipesFragment : BaseFragment() {
 
     private val viewModel: RecipesViewModel by fragmentViewModel()
 
-//    override fun onAttach(context: Context) {
-//        AndroidSupportInjection.inject(this)
-//        super.onAttach(context)
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
