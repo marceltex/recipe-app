@@ -11,7 +11,7 @@ import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.ui.BaseFragment
-import kotlinx.android.synthetic.main.recipes_fragment.*
+import kotlinx.android.synthetic.main.fragment_recipes.*
 import javax.inject.Inject
 
 class RecipesFragment : BaseFragment() {
@@ -27,7 +27,7 @@ class RecipesFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.recipes_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

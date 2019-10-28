@@ -9,7 +9,7 @@
         android:id="@+id/recipesFragment"
         android:name="com.marceltex.recipeapp.ui.recipes.RecipesFragment"
         android:label="@string/recipes_fragment_label"
-        tools:layout="@layout/recipes_fragment" >
+        tools:layout="@layout/fragment_recipes" >
         <action
             android:id="@+id/action_recipesFragment_to_addRecipeFragment"
             app:destination="@id/addRecipeFragment"
@@ -23,6 +23,6 @@
         android:id="@+id/addRecipeFragment"
         android:name="com.marceltex.recipeapp.ui.addrecipe.AddRecipeFragment"
         android:label="@string/add_recipe_fragment_label"
-        tools:layout="@layout/add_recipe_fragment" />
+        tools:layout="@layout/fragment_add_recipe" />
 
 </navigation>

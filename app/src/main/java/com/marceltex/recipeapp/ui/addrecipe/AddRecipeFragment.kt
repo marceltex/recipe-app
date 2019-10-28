@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.ui.BaseFragment
-import kotlinx.android.synthetic.main.add_recipe_fragment.*
+import kotlinx.android.synthetic.main.fragment_add_recipe.*
 
 class AddRecipeFragment : BaseFragment() {
 //
@@ -22,7 +22,7 @@ class AddRecipeFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.add_recipe_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_add_recipe, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
