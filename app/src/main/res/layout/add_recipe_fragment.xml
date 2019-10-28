@@ -11,18 +11,18 @@
         layout="@layout/toolbar" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/title_text_input_layout"
+        android:id="@+id/titleTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <EditText
-            android:id="@+id/title_edit_text"
+            android:id="@+id/titleEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title_hint" />
@@ -30,16 +30,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/description_text_input_layout"
+        android:id="@+id/descriptionTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="@+id/title_text_input_layout"
-        app:layout_constraintStart_toStartOf="@+id/title_text_input_layout"
-        app:layout_constraintTop_toBottomOf="@+id/title_text_input_layout">
+        app:layout_constraintEnd_toEndOf="@+id/titleTextInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/titleTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextInputLayout">
 
         <EditText
-            android:id="@+id/description_edit_text"
+            android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:ems="10"
@@ -49,21 +49,23 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/images_label_text_view"
+        android:id="@+id/imagesLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
         android:text="@string/images_label"
-        app:layout_constraintStart_toStartOf="@+id/title_text_input_layout"
-        app:layout_constraintTop_toBottomOf="@+id/description_text_input_layout" />
+        app:layout_constraintStart_toStartOf="@+id/titleTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTextInputLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/addImagesRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/title_text_input_layout"
-        app:layout_constraintStart_toStartOf="@+id/title_text_input_layout"
-        app:layout_constraintTop_toBottomOf="@+id/images_label_text_view" />
-
+        app:layout_constraintEnd_toEndOf="@+id/titleTextInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/titleTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/imagesLabelTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

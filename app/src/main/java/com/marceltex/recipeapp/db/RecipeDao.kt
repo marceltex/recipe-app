@@ -8,7 +8,7 @@ import com.marceltex.recipeapp.model.Image
 import com.marceltex.recipeapp.model.Recipe
 import com.marceltex.recipeapp.model.RecipeWithImages
 import io.reactivex.Completable
-import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 
 @Dao
@@ -16,7 +16,7 @@ interface RecipeDao {
 
     @Transaction
     @Query("SELECT * from recipes")
-    fun getAll(): Maybe<List<RecipeWithImages>>
+    fun getAll(): Observable<List<RecipeWithImages>>
 
     @Insert
     fun insertRecipe(recipe: Recipe): Single<Long>

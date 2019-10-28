@@ -4,6 +4,11 @@
     package="com.marceltex.recipeapp"
     tools:ignore="GoogleAppIndexingWarning">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="false" />
+
     <application
         android:name=".MvRxApplication"
         android:allowBackup="true"
