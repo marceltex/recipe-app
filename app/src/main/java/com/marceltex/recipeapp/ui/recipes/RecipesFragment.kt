@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
@@ -42,6 +44,6 @@ class RecipesFragment : BaseFragment() {
     }
 
     override fun invalidate() = withState(viewModel) { state ->
-
+        loadingProgressBar.isVisible = state.recipes is Loading
     }
 }
