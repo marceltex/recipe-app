@@ -6,4 +6,6 @@
     <string name="title_hint">Title</string>
     <string name="description_hint">Description</string>
     <string name="images_label">Images</string>
+    <string name="title_error">Please enter a title for this recipe</string>
+    <string name="description_error">Please enter a description for this recipe</string>
 </resources>

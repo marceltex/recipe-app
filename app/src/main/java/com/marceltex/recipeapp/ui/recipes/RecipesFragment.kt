@@ -7,19 +7,15 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_recipes.*
-import javax.inject.Inject
 
 class RecipesFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: RecipesViewModel.Factory
-
-    private val viewModel: RecipesViewModel by fragmentViewModel()
+    private val viewModel: RecipesViewModel by activityViewModel()
 
     private val recipesToolbar by lazy { toolbar as? Toolbar }
 
@@ -43,11 +39,6 @@ class RecipesFragment : BaseFragment() {
 
             false
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
     }
 
     override fun invalidate() = withState(viewModel) { state ->
