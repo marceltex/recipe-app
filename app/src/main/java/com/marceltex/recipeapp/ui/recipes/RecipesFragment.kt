@@ -9,15 +9,21 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.airbnb.mvrx.Loading
-import com.airbnb.mvrx.activityViewModel
+import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_recipes.*
+import javax.inject.Inject
 
 class RecipesFragment : BaseFragment() {
 
-    private val viewModel: RecipesViewModel by activityViewModel()
+    private val viewModel: RecipesViewModel by fragmentViewModel()
+//    private lateinit var bindings: FragmentRecipesBinding
+//    private val adapter = RecipeAd
+
+    @Inject
+    lateinit var viewModelFactory: RecipesViewModel.Factory
 
     private val recipesToolbar by lazy { toolbar as? Toolbar }
 
@@ -25,6 +31,8 @@ class RecipesFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+//        bindings = FragmentRecipesBinding.inflate(inflater, container, false)
+//        return bindings.root
         return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
 
@@ -35,7 +43,7 @@ class RecipesFragment : BaseFragment() {
         recipesToolbar?.inflateMenu(R.menu.recipes_menu)
 
         recipesToolbar?.setOnMenuItemClickListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.action_add -> findNavController().navigate(R.id.action_recipesFragment_to_addRecipeFragment)
             }
 
@@ -45,5 +53,14 @@ class RecipesFragment : BaseFragment() {
 
     override fun invalidate() = withState(viewModel) { state ->
         loadingProgressBar.isVisible = state.recipes is Loading
+        recipesRecyclerView.withModels {
+            state.recipes()?.forEach { recipeWithImages ->
+                recipeRow {
+                    id(recipeWithImages.recipe.id.toInt())
+                    recipe(recipeWithImages.recipe)
+                }
+            }
+        }
+//        bindings.state = state
     }
 }

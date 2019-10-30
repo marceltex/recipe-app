@@ -7,16 +7,19 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.airbnb.mvrx.activityViewModel
+import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.ui.BaseFragment
-import com.marceltex.recipeapp.ui.recipes.RecipesViewModel
 import kotlinx.android.synthetic.main.fragment_add_recipe.*
+import javax.inject.Inject
 
 class AddRecipeFragment : BaseFragment() {
 
-    private val viewModel: RecipesViewModel by activityViewModel()
+    private val viewModel: AddRecipeViewModel by fragmentViewModel()
+
+    @Inject
+    lateinit var viewModelFactory: AddRecipeViewModel.Factory
 
     private val addRecipeToolbar by lazy { toolbar as? Toolbar }
 
@@ -62,6 +65,9 @@ class AddRecipeFragment : BaseFragment() {
     }
 
     override fun invalidate() = withState(viewModel) { state ->
+        val recipeWithImages = state.recipe()
 
+        titleEditText.setText(recipeWithImages?.recipe?.title)
+        descriptionEditText.setText(recipeWithImages?.recipe?.description)
     }
 }

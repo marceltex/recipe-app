@@ -1,25 +1,18 @@
 package com.marceltex.recipeapp.ui.recipes
 
-import com.airbnb.mvrx.*
+import com.airbnb.mvrx.FragmentViewModelContext
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.ViewModelContext
 import com.marceltex.recipeapp.MvRxViewModel
-import com.marceltex.recipeapp.model.RecipeWithImages
 import com.marceltex.recipeapp.repository.RecipeRepository
-import com.marceltex.recipeapp.ui.MainActivity
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import io.reactivex.schedulers.Schedulers
 
-data class RecipeState(val recipes: Async<List<RecipeWithImages>> = Uninitialized) : MvRxState
-
 class RecipesViewModel @AssistedInject constructor(
-    @Assisted state: RecipeState,
-    private val repository: RecipeRepository
-) : MvRxViewModel<RecipeState>(state) {
-
-    // Async call to fetch all recipes from DB
-    fun fetchRecipes() {
-
-    }
+    @Assisted state: RecipesState,
+    repository: RecipeRepository
+) : MvRxViewModel<RecipesState>(state) {
 
     init {
         repository.getAllRecipes()
@@ -27,16 +20,21 @@ class RecipesViewModel @AssistedInject constructor(
             .execute { copy(recipes = it) }
     }
 
+    // Async call to fetch all recipes from DB
+//    fun fetchRecipes() {
+//
+//    }
+
     @AssistedInject.Factory
     interface Factory {
-        fun create(state: RecipeState): RecipesViewModel
+        fun create(state: RecipesState): RecipesViewModel
     }
 
-    companion object : MvRxViewModelFactory<RecipesViewModel, RecipeState> {
+    companion object : MvRxViewModelFactory<RecipesViewModel, RecipesState> {
 
-        override fun create(viewModelContext: ViewModelContext, state: RecipeState): RecipesViewModel? {
-            val activity = (viewModelContext as ActivityViewModelContext).activity<MainActivity>()
-            return activity.viewModelFactory.create(state)
+        override fun create(viewModelContext: ViewModelContext, state: RecipesState): RecipesViewModel? {
+            val fragment = (viewModelContext as FragmentViewModelContext).fragment<RecipesFragment>()
+            return fragment.viewModelFactory.create(state)
         }
     }
 }
