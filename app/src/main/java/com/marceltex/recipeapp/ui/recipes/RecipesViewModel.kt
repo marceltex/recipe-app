@@ -20,11 +20,6 @@ class RecipesViewModel @AssistedInject constructor(
             .execute { copy(recipes = it) }
     }
 
-    // Async call to fetch all recipes from DB
-//    fun fetchRecipes() {
-//
-//    }
-
     @AssistedInject.Factory
     interface Factory {
         fun create(state: RecipesState): RecipesViewModel
