@@ -12,9 +12,9 @@ class RecipeImageView @JvmOverloads constructor(
     defStyleAttr:Int = 0
 ) : AppCompatImageView(context, attr, defStyleAttr) {
 
-    // I know it would be better to inject Picasso here, but I struggled for hours trying to get
-    // Dagger to inject on a custom view with no luck. So I resorted to using the global instance of
-    // Picasso by calling Picasso.get()
+    // Ideally, I would like to inject an instance of Picasso here, but I struggled for hours trying
+    // to get Dagger to inject a property on a custom view, with no luck.
+    // So I resorted to using the global instance of Picasso provided by calling Picasso.get()
     private val picasso = Picasso.get()
 
     fun setPath(path: String?) {
