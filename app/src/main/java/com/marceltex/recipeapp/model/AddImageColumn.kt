@@ -3,7 +3,6 @@ package com.marceltex.recipeapp.model
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelView
@@ -21,7 +20,7 @@ class AddImageColumn @JvmOverloads constructor(
     }
 
     @CallbackProp
-    fun setClickListener(listener: View.OnClickListener?) {
+    fun setClickListener(listener: OnClickListener?) {
         setOnClickListener(listener)
     }
 }

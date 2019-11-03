@@ -3,13 +3,13 @@ package com.marceltex.recipeapp.model
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.marceltex.recipeapp.R
-import kotlinx.android.synthetic.main.image_column.view.*
+import kotlinx.android.synthetic.main.image_column.view.recipeImageView
+import kotlinx.android.synthetic.main.removable_image_column.view.*
 import java.io.File
 
 @ModelView(autoLayout = ModelView.Size.WRAP_WIDTH_MATCH_HEIGHT)
@@ -29,7 +29,7 @@ class RemovableImageColumn @JvmOverloads constructor(
     }
 
     @CallbackProp
-    fun setClickListener(listener: View.OnClickListener?) {
-        setOnClickListener(listener)
+    fun setClickListener(listener: OnClickListener?) {
+        removeImageView.setOnClickListener(listener)
     }
 }
