@@ -27,9 +27,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dataBinding {
-        enabled = true
-    }
     kapt {
         arguments {
             arg("room.schemaLocation", "$projectDir/schemas".toString())
@@ -55,7 +52,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
-
     // AndroidX - Navigation
     def navigation_version = "2.2.0-rc01"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
@@ -74,7 +70,6 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-
 
     // Dagger 2 - Assisted Inject
     def assisted_inject_version = "0.4.0"
