@@ -1,4 +1,4 @@
-package com.marceltex.recipeapp.ui.recipes
+package com.marceltex.recipeapp.model
 
 import android.content.Context
 import android.util.AttributeSet

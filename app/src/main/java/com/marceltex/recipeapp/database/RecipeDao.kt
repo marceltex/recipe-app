@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import com.marceltex.recipeapp.model.Recipe
-import com.marceltex.recipeapp.model.RecipeWithImages
 import io.reactivex.Completable
 
 @Dao
@@ -13,7 +12,7 @@ interface RecipeDao {
 
     @Transaction
     @Query("SELECT * from recipes")
-    fun getAll(): List<RecipeWithImages>
+    fun getAll(): List<Recipe>
 
     @Insert
     fun insertRecipe(recipe: Recipe): Completable

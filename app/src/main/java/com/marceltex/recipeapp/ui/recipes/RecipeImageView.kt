@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.marceltex.recipeapp.R
 import com.squareup.picasso.Picasso
+import java.io.File
 
 class RecipeImageView @JvmOverloads constructor(
     context: Context,
@@ -17,14 +18,14 @@ class RecipeImageView @JvmOverloads constructor(
     // So I resorted to using the global instance of Picasso provided by calling Picasso.get()
     private val picasso = Picasso.get()
 
-    fun setPath(path: String?) {
-        if (path == null) {
+    fun setFile(file: File?) {
+        if (file == null) {
             picasso.cancelRequest(this)
             setImageDrawable(null)
             return
         }
 
-        picasso.load(path)
+        picasso.load(file)
             .placeholder(R.color.loading)
             .into(this)
     }

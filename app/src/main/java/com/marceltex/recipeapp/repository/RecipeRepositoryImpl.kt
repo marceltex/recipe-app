@@ -2,13 +2,12 @@ package com.marceltex.recipeapp.repository
 
 import com.marceltex.recipeapp.database.RecipeDao
 import com.marceltex.recipeapp.model.Recipe
-import com.marceltex.recipeapp.model.RecipeWithImages
 import io.reactivex.Observable
 import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(private val dao: RecipeDao) : RecipeRepository {
 
-    override fun getAllRecipes() = Observable.fromCallable<List<RecipeWithImages>> {
+    override fun getAllRecipes() = Observable.fromCallable<List<Recipe>> {
 //        Thread.sleep(2000)
         dao.getAll()
     }

@@ -66,9 +66,9 @@ class AddRecipeFragment : BaseFragment() {
     }
 
     override fun invalidate() = withState(viewModel) { state ->
-        val recipeWithImages = state.recipe()
-
-        titleEditText.setText(recipeWithImages?.recipe?.title)
-        descriptionEditText.setText(recipeWithImages?.recipe?.description)
+//        val recipeWithImages = state.recipe()
+//
+//        titleEditText.setText(recipeWithImages?.recipe?.title)
+//        descriptionEditText.setText(recipeWithImages?.recipe?.description)
     }
 }
