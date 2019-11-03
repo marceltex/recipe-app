@@ -8,7 +8,5 @@ interface RecipeRepository {
 
     fun getAllRecipes(): Observable<List<Recipe>>
 
-//    fun addRecipeWithImages(recipeWithImages: RecipeWithImages): Completable
-
     fun addRecipe(recipe: Recipe): Completable
 }
