@@ -31,8 +31,13 @@ class AddRecipeViewModel @AssistedInject constructor(
             if (state.newTitle != null && state.newDescription != null) {
                 val recipe = Recipe(title = state.newTitle, description = state.newDescription, images = state.newImages)
                 repository.addRecipe(recipe)
+                resetState()
             }
         }
+    }
+
+    private fun resetState() {
+        setState { copy(newTitle = null, newDescription = null, newImages = null) }
     }
 
     @AssistedInject.Factory

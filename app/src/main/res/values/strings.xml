@@ -8,4 +8,5 @@
     <string name="images_label">Images</string>
     <string name="title_error">Please enter a title for this recipe</string>
     <string name="description_error">Please enter a description for this recipe</string>
+    <string name="recipe_saved_successfully_toast">Recipe saved successfully</string>
 </resources>

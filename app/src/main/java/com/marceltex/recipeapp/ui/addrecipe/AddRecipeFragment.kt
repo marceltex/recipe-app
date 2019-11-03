@@ -1,9 +1,8 @@
 package com.marceltex.recipeapp.ui.addrecipe
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
@@ -22,24 +21,26 @@ class AddRecipeFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.add_recipe_fragment, container, false)
+        val view = inflater.inflate(R.layout.add_recipe_fragment, container, false)
+        setHasOptionsMenu(true)
+        return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-//        addRecipeToolbar?.setupWithNavController(findNavController())
-//        addRecipeToolbar?.inflateMenu(R.menu.add_recipe_menu)
-
-//        addRecipeToolbar?.setOnMenuItemClickListener { item ->
-//            if (item.itemId == R.id.action_save && allFieldsValid()) {
-//                findNavController().popBackStack()
-//            }
-//            false
-//        }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.add_recipe_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun allFieldsValid(): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_save && areAllFieldsValid()) {
+            viewModel.saveRecipe()
+            Toast.makeText(context, R.string.recipe_saved_successfully_toast, Toast.LENGTH_SHORT)
+                .show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun areAllFieldsValid(): Boolean {
         var allValid = true
 
         if (titleEditText.text.isNotBlank()) {
@@ -60,7 +61,7 @@ class AddRecipeFragment : BaseFragment() {
     }
 
     override fun invalidate() = withState(viewModel) { state ->
-//        val recipeWithImages = state.recipe()
+        //        val recipeWithImages = state.recipe()
 //
 //        titleEditText.setText(recipeWithImages?.recipe?.title)
 //        descriptionEditText.setText(recipeWithImages?.recipe?.description)
