@@ -4,18 +4,36 @@ import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.marceltex.recipeapp.MvRxViewModel
+import com.marceltex.recipeapp.model.Recipe
 import com.marceltex.recipeapp.repository.RecipeRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 
 class AddRecipeViewModel @AssistedInject constructor(
     @Assisted state: AddRecipeState,
-    repository: RecipeRepository
+    private val repository: RecipeRepository
 ) : MvRxViewModel<AddRecipeState>(state) {
 
-//    init {
-//        setState { copy(recipe = Async<RecipeWithImages>()) }
-//    }
+    fun setTitle(title: String) {
+        setState { copy(newTitle = title) }
+    }
+
+    fun setDescription(description: String) {
+        setState { copy(newDescription = description) }
+    }
+
+    fun setImages(images: String) {
+        setState { copy(newImages = images) }
+    }
+
+    fun saveRecipe() {
+        withState { state ->
+            if (state.newTitle != null && state.newDescription != null) {
+                val recipe = Recipe(title = state.newTitle, description = state.newDescription, images = state.newImages)
+                repository.addRecipe(recipe)
+            }
+        }
+    }
 
     @AssistedInject.Factory
     interface Factory {

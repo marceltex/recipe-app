@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.ui.BaseFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_recipe_fragment.*
 import javax.inject.Inject
 
@@ -21,8 +17,6 @@ class AddRecipeFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: AddRecipeViewModel.Factory
-
-    private val addRecipeToolbar by lazy { toolbar as? Toolbar }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,15 +28,15 @@ class AddRecipeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        addRecipeToolbar?.setupWithNavController(findNavController())
-        addRecipeToolbar?.inflateMenu(R.menu.add_recipe_menu)
+//        addRecipeToolbar?.setupWithNavController(findNavController())
+//        addRecipeToolbar?.inflateMenu(R.menu.add_recipe_menu)
 
-        addRecipeToolbar?.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.action_save && allFieldsValid()) {
-                findNavController().popBackStack()
-            }
-            false
-        }
+//        addRecipeToolbar?.setOnMenuItemClickListener { item ->
+//            if (item.itemId == R.id.action_save && allFieldsValid()) {
+//                findNavController().popBackStack()
+//            }
+//            false
+//        }
     }
 
     private fun allFieldsValid(): Boolean {
