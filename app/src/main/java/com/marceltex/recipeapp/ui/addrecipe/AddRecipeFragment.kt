@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.model.RemovableImageColumnModel_
 import com.marceltex.recipeapp.model.addImageColumn
@@ -79,6 +80,13 @@ class AddRecipeFragment : BaseFragment() {
                     image(file)
                     clickListener { model, _, _, _ -> removeImage(model) }
                 }
+                for ((name, file) in images) {
+                    removableImageColumn {
+                        id(name)
+                        image(file)
+                        clickListener { model, _, _, _ -> removeImage(model) }
+                    }
+                }
             }
         }
     }
@@ -91,6 +99,11 @@ class AddRecipeFragment : BaseFragment() {
         }
     }
 
+    private fun removeImage(model: RemovableImageColumnModel_) {
+        images.remove(model.image().name)
+        addImagesRecyclerView.requestModelBuild()
+    }
+
     private fun arePermissionsGranted() =
         checkSelfPermission(context!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
 
@@ -99,11 +112,6 @@ class AddRecipeFragment : BaseFragment() {
             val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             requestPermissions(permissions, WRITE_EXTERNAL_STORAGE_REQUEST)
         }
-    }
-
-    private fun removeImage(model: RemovableImageColumnModel_) {
-        images.remove(model.image().name)
-        addImagesRecyclerView.requestModelBuild()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -181,7 +189,19 @@ class AddRecipeFragment : BaseFragment() {
     }
 
     override fun invalidate() = withState(viewModel) { state ->
+        titleEditText.setText(state.newTitle)
+        descriptionEditText.setText(state.newDescription)
 
+        val type = object : TypeToken<List<File>>() {}.type
+        val recipeImages = gson.fromJson<Array<File>>(state.newImages, type)
+
+        images.clear()
+        if (!recipeImages.isNullOrEmpty()) {
+            recipeImages.forEach { file ->
+                images[file.name] = file
+            }
+            addImagesRecyclerView.requestModelBuild()
+        }
     }
 
     companion object {

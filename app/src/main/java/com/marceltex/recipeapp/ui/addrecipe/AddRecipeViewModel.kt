@@ -3,15 +3,18 @@ package com.marceltex.recipeapp.ui.addrecipe
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
+import com.google.gson.Gson
 import com.marceltex.recipeapp.MvRxViewModel
 import com.marceltex.recipeapp.model.Recipe
 import com.marceltex.recipeapp.repository.RecipeRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import java.io.File
 
 class AddRecipeViewModel @AssistedInject constructor(
     @Assisted state: AddRecipeState,
-    private val repository: RecipeRepository
+    private val repository: RecipeRepository,
+    private val gson: Gson
 ) : MvRxViewModel<AddRecipeState>(state) {
 
     fun setTitle(title: String) {
@@ -22,7 +25,8 @@ class AddRecipeViewModel @AssistedInject constructor(
         setState { copy(newDescription = description) }
     }
 
-    fun setImages(images: String) {
+    fun setImages(files: Array<File>) {
+        val images = gson.toJson(files)
         setState { copy(newImages = images) }
     }
 
