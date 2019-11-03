@@ -1,32 +1,33 @@
 package com.marceltex.recipeapp.ui.recipes
 
-import com.airbnb.mvrx.*
+import com.airbnb.mvrx.FragmentViewModelContext
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.ViewModelContext
 import com.marceltex.recipeapp.MvRxViewModel
-import com.marceltex.recipeapp.model.Recipe
 import com.marceltex.recipeapp.repository.RecipeRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-
-data class RecipeState(val recipes: Async<List<Recipe>> = Uninitialized) : MvRxState
+import io.reactivex.schedulers.Schedulers
 
 class RecipesViewModel @AssistedInject constructor(
-    @Assisted state: RecipeState,
-    private val repository: RecipeRepository
-) : MvRxViewModel<RecipeState>(state) {
+    @Assisted state: RecipesState,
+    repository: RecipeRepository
+) : MvRxViewModel<RecipesState>(state) {
 
-    // Async call to fetch all recipes from DB
-    fun fetchRecipes() {
-
+    init {
+        repository.getAllRecipes()
+            .subscribeOn(Schedulers.io())
+            .execute { copy(recipes = it) }
     }
 
     @AssistedInject.Factory
     interface Factory {
-        fun create(state: RecipeState): RecipesViewModel
+        fun create(state: RecipesState): RecipesViewModel
     }
 
-    companion object : MvRxViewModelFactory<RecipesViewModel, RecipeState> {
+    companion object : MvRxViewModelFactory<RecipesViewModel, RecipesState> {
 
-        override fun create(viewModelContext: ViewModelContext, state: RecipeState): RecipesViewModel? {
+        override fun create(viewModelContext: ViewModelContext, state: RecipesState): RecipesViewModel? {
             val fragment = (viewModelContext as FragmentViewModelContext).fragment<RecipesFragment>()
             return fragment.viewModelFactory.create(state)
         }

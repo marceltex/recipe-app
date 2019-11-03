@@ -4,6 +4,8 @@
     package="com.marceltex.recipeapp"
     tools:ignore="GoogleAppIndexingWarning">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MvRxApplication"
         android:allowBackup="true"

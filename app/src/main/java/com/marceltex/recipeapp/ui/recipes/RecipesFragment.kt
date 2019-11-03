@@ -5,31 +5,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.ui.BaseFragment
 import javax.inject.Inject
 
 class RecipesFragment : BaseFragment() {
 
-    override val title by lazy { getString(R.string.recipes_title) }
+    private val viewModel: RecipesViewModel by fragmentViewModel()
 
     @Inject
     lateinit var viewModelFactory: RecipesViewModel.Factory
-
-    private val viewModel: RecipesViewModel by fragmentViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.recipes_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun invalidate() {
-
+    override fun invalidate() = withState(viewModel) { state ->
+//        loadingProgressBar.isVisible = state.recipes is Loading
+//        recipesRecyclerView.withModels {
+//            state.recipes()?.forEach { recipeWithImages ->
+//                recipeRow {
+//                    id(recipeWithImages.recipe.id.toInt())
+//                    recipe(recipeWithImages.recipe)
+//                }
+//            }
+//        }
+//        bindings.state = state
     }
 }

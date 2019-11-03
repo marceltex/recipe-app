@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Recipe App</string>
-    <string name="recipes_title">All Recipes</string>
-    <string name="add_recipe_title">Add Recipe</string>
+    <string name="recipes_fragment_label">All Recipes</string>
+    <string name="add_recipe_fragment_label">Add Recipe</string>
+    <string name="save_menu_item_title">Save</string>
+    <string name="title_hint">Title</string>
+    <string name="description_hint">Description</string>
+    <string name="images_label">Images</string>
+    <string name="title_error">Please enter a title for this recipe</string>
+    <string name="description_error">Please enter a description for this recipe</string>
 </resources>
