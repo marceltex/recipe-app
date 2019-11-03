@@ -16,7 +16,4 @@ interface RecipeDao {
 
     @Insert
     fun insertRecipe(recipe: Recipe): Completable
-
-//    @Insert
-//    fun insertImages(recipeImages: List<RecipeImage>): Completable
 }
