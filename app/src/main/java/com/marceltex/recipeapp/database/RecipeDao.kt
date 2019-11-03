@@ -1,14 +1,12 @@
-package com.marceltex.recipeapp.db
+package com.marceltex.recipeapp.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.marceltex.recipeapp.model.RecipeImage
 import com.marceltex.recipeapp.model.Recipe
 import com.marceltex.recipeapp.model.RecipeWithImages
 import io.reactivex.Completable
-import io.reactivex.Single
 
 @Dao
 interface RecipeDao {
@@ -18,8 +16,8 @@ interface RecipeDao {
     fun getAll(): List<RecipeWithImages>
 
     @Insert
-    fun insertRecipe(recipe: Recipe): Single<Long>
+    fun insertRecipe(recipe: Recipe): Completable
 
-    @Insert
-    fun insertImages(recipeImages: List<RecipeImage>): Completable
+//    @Insert
+//    fun insertImages(recipeImages: List<RecipeImage>): Completable
 }

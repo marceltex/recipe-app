@@ -11,7 +11,8 @@ import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.ui.BaseFragment
-import kotlinx.android.synthetic.main.fragment_add_recipe.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.add_recipe_view.*
 import javax.inject.Inject
 
 class AddRecipeFragment : BaseFragment() {

@@ -1,11 +1,9 @@
 package com.marceltex.recipeapp.ui.addrecipe
 
-import com.airbnb.mvrx.Async
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.marceltex.recipeapp.MvRxViewModel
-import com.marceltex.recipeapp.model.RecipeWithImages
 import com.marceltex.recipeapp.repository.RecipeRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -15,9 +13,9 @@ class AddRecipeViewModel @AssistedInject constructor(
     repository: RecipeRepository
 ) : MvRxViewModel<AddRecipeState>(state) {
 
-    init {
-        setState { copy(recipe = Async<RecipeWithImages>()) }
-    }
+//    init {
+//        setState { copy(recipe = Async<RecipeWithImages>()) }
+//    }
 
     @AssistedInject.Factory
     interface Factory {
