@@ -19,7 +19,7 @@ class RecipeRow @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.recipe_row, this, true )
+        LayoutInflater.from(context).inflate(R.layout.recipe_row, this, true)
     }
 
     @TextProp
@@ -36,8 +36,8 @@ class RecipeRow @JvmOverloads constructor(
     fun setImages(images: Array<File>?) {
         if (!images.isNullOrEmpty()) {
             imagesRecyclerView.withModels {
-                imageColumn {
-                    images.forEach { image ->
+                images.forEach { image ->
+                    imageColumn {
                         id(image.name)
                         image(image)
                     }
