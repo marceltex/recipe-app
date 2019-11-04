@@ -1,4 +1,4 @@
-# Android Coding Exercise Solution - Recipe App:
+# Android Coding Exercise - Recipe App:
 
 ## Architectural pattern followed
 
