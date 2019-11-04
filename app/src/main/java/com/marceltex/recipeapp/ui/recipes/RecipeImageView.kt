@@ -15,7 +15,7 @@ class RecipeImageView @JvmOverloads constructor(
 
     // Ideally, I would like to inject an instance of Picasso here, but I struggled for hours trying
     // to get Dagger to inject a property on a custom view, with no luck.
-    // So I resorted to using the global instance of Picasso provided by calling Picasso.get()
+    // So I resorted to using the global instance of Picasso provided by Picasso.get()
     private val picasso = Picasso.get()
 
     fun setFile(file: File?) {

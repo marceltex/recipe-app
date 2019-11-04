@@ -11,10 +11,14 @@ import io.reactivex.schedulers.Schedulers
 
 class RecipesViewModel @AssistedInject constructor(
     @Assisted state: RecipesState,
-    repository: RecipeRepository
+    private val repository: RecipeRepository
 ) : MvRxViewModel<RecipesState>(state) {
 
     init {
+        refreshRecipes()
+    }
+
+    fun refreshRecipes() {
         repository.getAllRecipes()
             .subscribeOn(Schedulers.io())
             .execute { copy(recipes = it) }
