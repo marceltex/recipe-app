@@ -1,4 +1,4 @@
-package com.marceltex.recipeapp.model
+package com.marceltex.recipeapp.epoxymodel
 
 import android.content.Context
 import android.util.AttributeSet

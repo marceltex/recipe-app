@@ -10,7 +10,7 @@ import com.airbnb.mvrx.withState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.marceltex.recipeapp.R
-import com.marceltex.recipeapp.model.recipeRow
+import com.marceltex.recipeapp.epoxymodel.recipeRow
 import com.marceltex.recipeapp.ui.BaseFragment
 import kotlinx.android.synthetic.main.recipes_fragment.*
 import java.io.File

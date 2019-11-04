@@ -18,9 +18,9 @@ import com.airbnb.mvrx.withState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.marceltex.recipeapp.R
-import com.marceltex.recipeapp.model.RemovableImageColumnModel_
-import com.marceltex.recipeapp.model.addImageColumn
-import com.marceltex.recipeapp.model.removableImageColumn
+import com.marceltex.recipeapp.epoxymodel.RemovableImageColumnModel_
+import com.marceltex.recipeapp.epoxymodel.addImageColumn
+import com.marceltex.recipeapp.epoxymodel.removableImageColumn
 import com.marceltex.recipeapp.setTextIfDifferent
 import com.marceltex.recipeapp.ui.BaseFragment
 import com.marceltex.recipeapp.ui.MainActivity
