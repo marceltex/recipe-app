@@ -18,7 +18,7 @@ I decided to use Room to creat a local database of the recipes saved to the app.
 
 #### Database design
 
-This app has a reall simple database design that comprises of a single table named `recipes`. This table has 4 fields namely, `id`, `title`, `description`, `images`. The properties of each recipe record in the table is stored in the appropriate field. I know storing a list of images in the `images` field doesn't follow database normalisation at all. It actually deosn't even conform to first normal form (1NF) which states that each field should contain a single value. 
+This app has a simple database design that comprises of a single table named `recipes`. This table has 4 fields namely, `id`, `title`, `description`, `images`. The properties of each recipe record in the table is stored in the appropriate field. I know storing a list of images in the `images` field doesn't follow database normalisation at all. It actually deosn't even conform to first normal form (1NF) which states that each field should contain a single value. 
 
 I initially thought about having a separate `images` table, but then decided against it. The overhead of doing joins across two tables, didn't seem worth it, especially because images will never be queried independently of recipes.
 
