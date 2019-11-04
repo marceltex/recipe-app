@@ -59,19 +59,21 @@ class AddRecipeFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_save && areAllFieldsValid()) {
-            viewModel.saveRecipe()
+        when (item.itemId) {
+            R.id.action_save -> {
+                if (areAllFieldsValid()) {
+                    viewModel.saveRecipe()
 
-            // Remove focus on text fields and hide keyboard
-            val view = activity?.window?.currentFocus
-            val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
-            view?.clearFocus()
+                    // Remove focus on text fields and hide keyboard
+                    val view = activity?.window?.currentFocus
+                    val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+                    view?.clearFocus()
 
-            Toast.makeText(context, R.string.recipe_saved_successfully_toast, Toast.LENGTH_LONG)
-                .show()
-        } else {
-            (activity as MainActivity).navController.navigateUp()
+                    Toast.makeText(context, R.string.recipe_saved_successfully_toast, Toast.LENGTH_LONG).show()
+                }
+            }
+            else -> (activity as MainActivity).navController.navigateUp()
         }
         return super.onOptionsItemSelected(item)
     }
