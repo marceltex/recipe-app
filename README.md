@@ -1,158 +1,47 @@
 # Android Coding Exercise Solution - Recipe App:
 
-## Part A - Fix current bugs
+## Architectural pattern followed
 
-### Bug 1 - Layout does not look as expected
+I decided to follow the MvRx Android framework to build this app. This was recommended in the coding exercise document. Once I grasped the flow and the concepts introduced in MvRx, I found it to be a very cool framework to use to build apps. I especially liked some of the cool helper functions provided with MvRx like `execute` that can be called on an Observable and it manages the subscribing to and disposing of that observable for you, which is really cool.
 
-The constraints were broken/non-existant for many views on the login screen, which was causing it to not look like the design. To fix this I did the following:
+I structured the app as two fragments (`RecipesFragment` & `AddRecipeFragment`) and two view models (`RecipesViewModel` & `AddRecipeViewModel`) that are both bound to the lifecycle of their respective fragments. I decided to use two `fragmentViewModel`s instead of one `activityViewModel`, because each fragment has quite a well defined purpose and there wasn't a need for sharing any data between the fragments. The `RecipesViewModel` handles the retrieval of all the recipes stored in the database and the `AddRecipeViewModel` handles adding a new recipe to the database.
 
-- Constrained the top of the password til to the bottom of the email til (text input layout)
-- Constrained the top of the name til to the bottom of the password til
-- Added horizontal constraints for all the tils and gave them a margin of 16dp on both the start and end to add some padding
-- Added horizontal constraints for the animation view
-- Added horizontal constraints for the sign in button and constrained the top of the sign in button to the bottom of the animation
+## Frameworks used and brief motivation
 
-### Bug 2 - Validation is incorrect
+### Android Navigation Component (Android Jetpack)
 
+I decided to use the Android Navigation component for the navigation of this app. I prefer using the Navigation component, as it provides a really concise and easy way to navigate between fragemnts, without needing to use the Fragment Manager.
 
-To fix the incorrect validation, I did the following:
+### Room (Android Jetpack)
 
-- First, I noticed that the validation on the name til was completely wrong. If the name was invalid, it was setting an error message on the `til_email`. I changed this so that the error is set on the `til_name` itself.
-- I also noticed the `NAME_REGEX` was being compared to the text that had been entered in the `password_et` (edit text). I changed this so that the `NAME REGEX` is compared to the text in the `name_et`.
-- Next I wrapped the name pattern checks in an `if (et_name.text.isNotEmpty())`. Since the name field is optional, I only want to do validation on it, if the user has entered some text in it.
-- I noticed that the way the `allValid` Boolean was working, is that only one of the fields would need to be valid in order for it to be `true`, which is incorrect. I decided to flip the way the `allValid` Boolean works. I initialised it with a value of `true`, then if any validation failed on any of the fields, I set the allValid Boolean to `false`. This ensures that all the fields have to be valid for the all valid boolean to be returned as `true`.
+I decided to use Room to creat a local database of the recipes saved to the app. This will allow the data to be persisted locally even after the app has been killed.
 
-### Bug 3 - Animation is looping incorrectly
+#### Database design
 
-To fix the animation looping incorrectly, I modified the `setupAnimation()` function in the `LoginActivity.kt` file, as shown below:
+This app has a reall simple database design that comprises of a single table named `recipes`. This table has 4 fields namely, `id`, `title`, `description`, `images`. The properties of each recipe record in the table is stored in the appropriate field. I know storing a list of images in the `images` field doesn't follow database normalisation at all. It actually deosn't even conform to first normal form (1NF) which states that each field should contain a single value. 
 
-```kotlin
-private fun setupAnimation() {
-    pigAnimation.setMinAndMaxFrame(firstAnim.first, firstAnim.second)
-    pigAnimation.playAnimation()
+I initially thought about having a separate `images` table, but then decided against it. The overhead of doing joins across two tables, didn't seem worth it, especially because images will never be queried independently of recipes.
 
-    pigAnimation.addAnimatorListener(object : Animator.AnimatorListener {
-        override fun onAnimationStart(animation: Animator) {
-        }
+### Dagger 2
 
-        override fun onAnimationEnd(animation: Animator) {
-            pigAnimation.setMinAndMaxFrame(secondAnim.first, secondAnim.second)
-            pigAnimation.repeatCount = ValueAnimator.INFINITE
-            pigAnimation.playAnimation()
-        }
+I used Dagger 2 to handle dependency injection throughout the app. I injected frameworks like `Gson` and `EasyImage`, so that there aren't multiple instances of these created throughout the app.
 
-        override fun onAnimationCancel(animation: Animator) {
-        }
+### Dagger 2 - Asisted inject
 
-        override fun onAnimationRepeat(animation: Animator) {
-        }
-    })
-}
-```
+I needed to use `AssistedInject` to inject the `RecipeRepository` as a constructor parameter in both the view models. `AssistedInject` allows you to specify which constructor parameters should not be injected by dagger, by annotating these paramneters with `@Assisted`
 
-Before playing the animation for the first time, I changed the start and ending frames of the animation to the frame range that should only be played once. I then triggered the frst animation to play.
-I added an `AnimationListener` to "observe" the animation and when it is finished, and the `onAnimationEnd` function is called, I set the start and ending frames of the animation to the frame range that should be looped continuously. I made the animation loop continuously by setting the `repeatCount` property of the animation to `ValueAnimator.INFINITE`.
+### EasyImage
 
-## Part B - Add 2 new screens
+I used `EasyImage` to handle the image selection from the device's storage. When an image is selected I save it in the app's internal storage and store the reference to the internally saved image in the database. This allows the app to still work and display the correct images even if the user removes the original images from his device's external storage.
 
-We now want to give some useful functionality to our users. To allow them to log into the app, view and edit their account using our sandbox API.
+### Epoxy
 
-### Screen 2 - User accounts screen
-This screen should be shown after the user has successfully logged in and should show have the following functionality:
-- Display "Hello {name} **only** if they provided it on previous screen"
-- Show the **'TotalPlanValue'** of a user.
-- Show the accounts the user holds, e.g. ISA, GIA, LISA, Pension.
-- Show all of those account's **'PlanValue'**.
-- Shhow all of those account's **'Moneybox'** total.
+I used `Epoxy` for all the Recycler Views throughout the app. `Epoxy` made it very easy to create heterogenous Recycler Views without the need to create multiple complex Adapters.
 
-### Screen 3 - Individual account screen
-If a user selects one of those accounts, they should then be taken to this screen.  This screen should have the following functionality:
-- Show the **'Name'** of the account.
-- Show the account's **'PlanValue'**.
-- Show the accounts **'Moneybox'** total.
-- Allow a user to add to a fixed value (e.g. £10) to their moneybox total.
+### Gson
 
-A prototype wireframe of all 3 screens is provided as a guideline. You are free to change any elements of the screen and provide additional information if you wish.
+I used `Gson` when saving data to the database. `Gson` was used to serialise the list of images into a JSON string to be stored in the `images` field of the database. I then used `Gson` again to deserialise the JSON string to a list images when retrieving data from the database.
 
-![](/images/wireframe.png)
+### Picasso
 
-## What we are looking for:
- - An android application written in either Java or Kotlin.
- - Demonstration of coding style and design patterns.
- - Knowledge of common android libraries and any others that you find useful.
- - Storage of data between screens.
- - Consistency of data between screens.
- - Error handling.
- - Any form of unit or integration testing you see fit.
- - The application must run on Android 5.0 and above.
- - The application must compile and run in Android Studio.
-
-Please feel free to refactor the LoginActivity and use any libraries/helper methods to make your life easier.
-
-## How to Submit your solution:
- - Clone this repository
- - Create a public repo in github, bitbucket or a suitable alternative and provide a link to the repository.
- - Provide a readme in markdown which details how you solved the bugs in part A, and explains the structure of your solution in Part B and any libraries that you may have used.
-
-## API Usage
-This a brief summary of the api endpoints in the moneybox sandbox environment. There a lot of other additional properties from the json responses that are not relevant, but you must use these endpoints to retrieve the information needed for this application.
-
-#### Base URL & Test User
-The base URL for the moneybox sandbox environment is `https://api-test01.moneyboxapp.com/`.
-You can log into test your app using the following user:
-
-|  Username          | Password         |
-| ------------- | ------------- |
-| androidtest@moneyboxapp.com  | P455word12  |
-
-#### Headers
-
-In order to make requests https must be used and the following headers must be included in each request.
-
-|  Key | Value |
-| ------------- | ------------- |
-| AppId  | 3a97b932a9d449c981b595  |
-| Content-Type  | application/json  |
-| appVersion | 5.10.0 |
-| apiVersion | 3.0.0 |
-
-#### Authentication
-To login with this user to retrieve a bearer token you need to call `POST /users/login`.
-```
-POST /users/login
-{
-  "Email": "androidtest@moneyboxapp.com",
-  "Password": "P455word12",
-  "Idfa": "ANYTHING"
-}
-```
-Sample json response
-```
-"Session": {
-        "BearerToken": "TsMWRkbrcu3NGrpf84gi2+pg0iOMVymyKklmkY0oI84=",
-        "ExternalSessionId": "4ff0eab7-7d3f-40c5-b87b-68d4a4961983", -- not used
-        "SessionExternalId": "4ff0eab7-7d3f-40c5-b87b-68d4a4961983", -- not used
-        "ExpiryInSeconds": 0 -- not used
-    }
-```
-After obtaining a bearer token an Authorization header must be provided for all other endpoints along with the headers listed above (Note: The BearerToken has a sliding expiration of 5 mins).
-
-|  Key          | Value         |
-| ------------- | ------------- |
-| Authorization  | Bearer TsMWRkbrcu3NGrpf84gi2+pg0iOMVymyKklmkY0oI84=  |
-
-#### Investor Products
-Provides product and account information for a user that will be needed for the two additional screens.
-```
-GET /investorproducts
-```
-### One off payments
-Adds a one off amount to the users moneybox.
-```
-POST /oneoffpayments
-{
-  "Amount": 20,
-  "InvestorProductId": 3230 ------> The InvestorProductId from /investorproducts endpoint
-}
-```
-Good luck!
+I used `Picasso` to simplify the setting loading and displaying of images.
