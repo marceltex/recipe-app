@@ -7,7 +7,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.airbnb.mvrx.fragmentViewModel
@@ -18,6 +21,7 @@ import com.marceltex.recipeapp.R
 import com.marceltex.recipeapp.model.RemovableImageColumnModel_
 import com.marceltex.recipeapp.model.addImageColumn
 import com.marceltex.recipeapp.model.removableImageColumn
+import com.marceltex.recipeapp.setTextIfDifferent
 import com.marceltex.recipeapp.ui.BaseFragment
 import kotlinx.android.synthetic.main.add_recipe_fragment.*
 import pl.aprilapps.easyphotopicker.DefaultCallback
@@ -56,7 +60,16 @@ class AddRecipeFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_save && areAllFieldsValid()) {
             viewModel.saveRecipe()
-            Toast.makeText(context, R.string.recipe_saved_successfully_toast, Toast.LENGTH_SHORT)
+
+            // Remove focus on text fields and hide keyboard
+            val view = activity?.window?.currentFocus
+            val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+            view?.clearFocus()
+//            images.clear()
+//            addImagesRecyclerView.requestModelBuild()
+
+            Toast.makeText(context, R.string.recipe_saved_successfully_toast, Toast.LENGTH_LONG)
                 .show()
         }
         return super.onOptionsItemSelected(item)
@@ -64,6 +77,29 @@ class AddRecipeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        titleEditText.addTextChangedListener( object: TextWatcher {
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.setTitle(s.toString())
+            }
+        })
+
+        descriptionEditText.addTextChangedListener( object: TextWatcher {
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.setDescription(s.toString())
+            }
+        })
+
 
         setupAddImagesRecylcerView()
     }
@@ -79,13 +115,6 @@ class AddRecipeFragment : BaseFragment() {
                     id(name)
                     image(file)
                     clickListener { model, _, _, _ -> removeImage(model) }
-                }
-                for ((name, file) in images) {
-                    removableImageColumn {
-                        id(name)
-                        image(file)
-                        clickListener { model, _, _, _ -> removeImage(model) }
-                    }
                 }
             }
         }
@@ -152,9 +181,9 @@ class AddRecipeFragment : BaseFragment() {
                         context!!.openFileOutput(imageFile.file.name, Context.MODE_PRIVATE).use {
                             it.write(imageFile.file.readBytes())
                         }
-
                         images[file.name] = file
                     }
+                    viewModel.setImages(images.values.toTypedArray())
                     addImagesRecyclerView.requestModelBuild()
                 }
 
@@ -189,14 +218,14 @@ class AddRecipeFragment : BaseFragment() {
     }
 
     override fun invalidate() = withState(viewModel) { state ->
-        titleEditText.setText(state.newTitle)
-        descriptionEditText.setText(state.newDescription)
+        titleEditText.setTextIfDifferent(state.newTitle)
+        descriptionEditText.setTextIfDifferent(state.newDescription)
 
-        val type = object : TypeToken<List<File>>() {}.type
-        val recipeImages = gson.fromJson<Array<File>>(state.newImages, type)
+        val type = object : TypeToken<Array<File>>() {}.type
+        val recipeImages = gson.fromJson<Array<File>>(state.newImages, type) ?: arrayOf()
 
-        images.clear()
-        if (!recipeImages.isNullOrEmpty()) {
+        if (recipeImages.size != images.size) {
+            images.clear()
             recipeImages.forEach { file ->
                 images[file.name] = file
             }
