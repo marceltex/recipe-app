@@ -3,6 +3,7 @@ package com.marceltex.recipeapp.epoxymodel
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
@@ -35,6 +36,7 @@ class RecipeRow @JvmOverloads constructor(
     @ModelProp
     fun setImages(images: Array<File>?) {
         if (!images.isNullOrEmpty()) {
+            imagesRecyclerView.visibility = View.VISIBLE
             imagesRecyclerView.withModels {
                 images.forEach { image ->
                     imageColumn {
