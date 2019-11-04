@@ -44,4 +44,4 @@ I used `Gson` when saving data to the database. `Gson` was used to serialise the
 
 ### Picasso
 
-I used `Picasso` to simplify the setting loading and displaying of images.
+I used `Picasso` to simplify the loading and displaying of images.
