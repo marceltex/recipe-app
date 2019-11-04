@@ -176,6 +176,7 @@ class AddRecipeFragment : BaseFragment() {
 
     private fun removeImage(model: RemovableImageColumnModel_) {
         images.remove(model.image().name)
+        viewModel.setImages(images.values.toTypedArray())
         addImagesRecyclerView.requestModelBuild()
     }
 
