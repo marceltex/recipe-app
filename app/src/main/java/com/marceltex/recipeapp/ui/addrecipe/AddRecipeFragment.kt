@@ -23,6 +23,7 @@ import com.marceltex.recipeapp.model.addImageColumn
 import com.marceltex.recipeapp.model.removableImageColumn
 import com.marceltex.recipeapp.setTextIfDifferent
 import com.marceltex.recipeapp.ui.BaseFragment
+import com.marceltex.recipeapp.ui.MainActivity
 import kotlinx.android.synthetic.main.add_recipe_fragment.*
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
@@ -66,11 +67,11 @@ class AddRecipeFragment : BaseFragment() {
             val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
             view?.clearFocus()
-//            images.clear()
-//            addImagesRecyclerView.requestModelBuild()
 
             Toast.makeText(context, R.string.recipe_saved_successfully_toast, Toast.LENGTH_LONG)
                 .show()
+        } else {
+            (activity as MainActivity).navController.navigateUp()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -101,10 +102,10 @@ class AddRecipeFragment : BaseFragment() {
         })
 
 
-        setupAddImagesRecylcerView()
+        setupAddImagesRecyclerView()
     }
 
-    private fun setupAddImagesRecylcerView() {
+    private fun setupAddImagesRecyclerView() {
         addImagesRecyclerView.withModels {
             addImageColumn {
                 id("add_image")
@@ -119,6 +120,51 @@ class AddRecipeFragment : BaseFragment() {
             }
         }
     }
+
+    override fun invalidate() = withState(viewModel) { state ->
+        titleEditText.setTextIfDifferent(state.newTitle)
+        descriptionEditText.setTextIfDifferent(state.newDescription)
+
+        val type = object : TypeToken<Array<File>>() {}.type
+        val recipeImages = gson.fromJson<Array<File>>(state.newImages, type) ?: arrayOf()
+
+        if (recipeImages.size != images.size) {
+            images.clear()
+            recipeImages.forEach { file ->
+                images[file.name] = file
+            }
+            addImagesRecyclerView.requestModelBuild()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        easyImage.handleActivityResult(requestCode, resultCode, data, requireActivity(), object : DefaultCallback() {
+
+            override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
+                imageFiles.forEach { imageFile ->
+                    val file = File(context!!.filesDir, imageFile.file.name)
+                    context!!.openFileOutput(imageFile.file.name, Context.MODE_PRIVATE).use {
+                        it.write(imageFile.file.readBytes())
+                    }
+                    images[file.name] = file
+                }
+                viewModel.setImages(images.values.toTypedArray())
+                addImagesRecyclerView.requestModelBuild()
+            }
+
+            override fun onImagePickerError(error: Throwable, source: MediaSource) {
+                error.printStackTrace()
+            }
+
+            override fun onCanceled(source: MediaSource) {
+
+            }
+        })
+    }
+
+    // Below is a lot of boilerplate code that was required for requesting permissions and field validation
 
     private fun launchImageSelector() {
         if (arePermissionsGranted()) {
@@ -170,32 +216,6 @@ class AddRecipeFragment : BaseFragment() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        easyImage.handleActivityResult(requestCode, resultCode, data, requireActivity(), object : DefaultCallback() {
-
-                override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
-                    imageFiles.forEach { imageFile ->
-                        val file = File(context!!.filesDir, imageFile.file.name)
-                        context!!.openFileOutput(imageFile.file.name, Context.MODE_PRIVATE).use {
-                            it.write(imageFile.file.readBytes())
-                        }
-                        images[file.name] = file
-                    }
-                    viewModel.setImages(images.values.toTypedArray())
-                    addImagesRecyclerView.requestModelBuild()
-                }
-
-                override fun onImagePickerError(error: Throwable, source: MediaSource) {
-                    error.printStackTrace()
-                }
-
-                override fun onCanceled(source: MediaSource) {
-
-                }
-            })
-    }
 
     private fun areAllFieldsValid(): Boolean {
         var allValid = true
@@ -215,22 +235,6 @@ class AddRecipeFragment : BaseFragment() {
         }
 
         return allValid
-    }
-
-    override fun invalidate() = withState(viewModel) { state ->
-        titleEditText.setTextIfDifferent(state.newTitle)
-        descriptionEditText.setTextIfDifferent(state.newDescription)
-
-        val type = object : TypeToken<Array<File>>() {}.type
-        val recipeImages = gson.fromJson<Array<File>>(state.newImages, type) ?: arrayOf()
-
-        if (recipeImages.size != images.size) {
-            images.clear()
-            recipeImages.forEach { file ->
-                images[file.name] = file
-            }
-            addImagesRecyclerView.requestModelBuild()
-        }
     }
 
     companion object {

@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
+import com.airbnb.epoxy.TextProp
 import com.marceltex.recipeapp.R
-import com.marceltex.recipeapp.model.Recipe
 import kotlinx.android.synthetic.main.recipe_row.view.*
+import java.io.File
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
 class RecipeRow @JvmOverloads constructor(
@@ -21,19 +22,27 @@ class RecipeRow @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.recipe_row, this, true )
     }
 
-    @ModelProp
-    fun setRecipe(recipe: Recipe) {
-        titleTextView.text = recipe.title
-        descriptionTextView.text = recipe.description
+    @TextProp
+    fun setTitle(title: CharSequence) {
+        titleTextView.text = title
     }
 
-//    @TextProp
-//    fun setTitle(title: CharSequence) {
-//        titleTextView.text = title
-//    }
-//
-//    @TextProp
-//    fun setDescription(description: CharSequence) {
-//        descriptionTextView.text = description
-//    }
+    @TextProp
+    fun setDescription(description: CharSequence) {
+        descriptionTextView.text = description
+    }
+
+    @ModelProp
+    fun setImages(images: Array<File>?) {
+        if (!images.isNullOrEmpty()) {
+            imagesRecyclerView.withModels {
+                imageColumn {
+                    images.forEach { image ->
+                        id(image.name)
+                        image(image)
+                    }
+                }
+            }
+        }
+    }
 }

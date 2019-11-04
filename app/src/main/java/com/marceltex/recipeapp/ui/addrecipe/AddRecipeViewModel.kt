@@ -9,6 +9,7 @@ import com.marceltex.recipeapp.model.Recipe
 import com.marceltex.recipeapp.repository.RecipeRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import io.reactivex.schedulers.Schedulers
 import java.io.File
 
 class AddRecipeViewModel @AssistedInject constructor(
@@ -34,7 +35,7 @@ class AddRecipeViewModel @AssistedInject constructor(
         withState { state ->
             if (state.newTitle != null && state.newDescription != null) {
                 val recipe = Recipe(title = state.newTitle, description = state.newDescription, images = state.newImages)
-                repository.addRecipe(recipe)
+                repository.addRecipe(recipe).subscribeOn(Schedulers.io()).subscribe()
                 resetState()
             }
         }

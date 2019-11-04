@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Green Chicken Curry" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/imagesRecyclerView"
         android:layout_width="0dp"
         android:layout_height="150dp"

@@ -9,4 +9,5 @@
     <string name="title_error">Please enter a title for this recipe</string>
     <string name="description_error">Please enter a description for this recipe</string>
     <string name="recipe_saved_successfully_toast">Recipe saved successfully</string>
+    <string name="no_saved_recipes_message">No saved recipes found. Please save a recipe to see it appear here</string>
 </resources>
